@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Istok Web';
+            margin: 50px;
+            background-image: linear-gradient(to right, #000000, #1B1B1B, #222222);
+            color: white;
+        }
+        h1{
+            font-size: 35px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .input-container input[type="text"] {
+            width: 150%;
+            height: 40px; 
+            padding: 20px;
+            box-sizing: border-box;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8) inset;
+            font-size: 25px;
+        }
+        
+        info-icon {
+            position: absolute;
+            top: 75%;
+            transform: translateY(-50%);
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-image: url('/static/information_symbol_black.png');
+            background-size: cover;
+            cursor: pointer;
+        }
+        .info-content {
+            position: absolute;
+            top: -30px;
+            left: 50px;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            display: none;
+            z-index: 1;
+            width: 200px;
+        }
+        .info-icon:hover .info-content {
+            display: block;
+        }
+        input[type="submit"] {
+            background-color: rgba(0, 0, 0, .20);
+            color: white;
+            border: 2px solid transparent;
+            border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.8)) 1;
+            border-image-slice: 10;
+            cursor: pointer;
+            transition: background-color 1s ease, color 1s ease;
+            padding: 15px 20px;
+            font-size: 20px;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: white;
+            color: black;
+        }
+        .prediction {
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.8)) 1;
+            border-image-slice: 10;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        .prediction h2{
+            font-size: 25px;
+        }
+        .prediction p{
+            font-size: 17px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+            <div class="input-container">
+                <label for="avg_area_income">Average Area Income:</label>
+                <input type="text" id="avg_area_income" name="avg_area_income" required>
+                <div class="info-icon">
+                    <div class="info-content">
+                        What is the average income of all people in the area relative to the house?
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="avg_area_house_age">Average Area House Age:</label>
+                <input type="text" id="avg_area_house_age" name="avg_area_house_age" required>
+                <div class="info-icon" <img<img>
+                    <div class="info-content">
+                        What is the average house age of all houses in the area relative to the house?
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="avg_area_number_of_rooms">Average Area Number of Rooms:</label>
+                <input type="text" id="avg_area_number_of_rooms" name="avg_area_number_of_rooms" required>
+                <div class="info-icon">
+                    <div class="info-content">
+                        What is the average number of rooms of all houses in the area relative to the house?
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="avg_area_number_of_bedrooms">Average Area Number of Bedrooms:</label>
+                <input type="text" id="avg_area_number_of_bedrooms" name="avg_area_number_of_bedrooms" required>
+                <div class="info-icon">
+                    <div class="info-content">
+                        What is the average numger of bedrooms of all houses in the area relative to the house?
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="area_population">Area Population:</label>
+                <input type="text" id="area_population" name="area_population" required>
+                <div class="info-icon">
+                    <div class="info-content">
+                        What is the population of the are relatie to the house?
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+        <div class="prediction">
+            <h2>Prediction</h2>
+            <p>The predicted house price is: <u><b>${{prediction}}</b></u></p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
